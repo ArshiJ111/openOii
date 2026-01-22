@@ -1,14 +1,20 @@
 from __future__ import annotations
 
 import asyncio
+from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 import pytest
 import pytest_asyncio
+from fastapi.testclient import TestClient
+from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlmodel import SQLModel
 
+from app.api.deps import get_app_settings, get_db_session, get_ws_manager
 from app.config import Settings
+from app.main import create_app
+from app.models import agent_run, message, project  # noqa: F401
 
 
 @pytest.fixture(scope="session")
@@ -28,6 +34,14 @@ def test_settings() -> Settings:
     )
 
 
+class StubWsManager:
+    def __init__(self) -> None:
+        self.events: list[tuple[int, dict]] = []
+
+    async def send_event(self, project_id: int, event: dict) -> None:
+        self.events.append((project_id, event))
+
+
 @pytest_asyncio.fixture(scope="function")
 async def test_session(test_settings: Settings) -> AsyncGenerator[AsyncSession, None]:
     engine = create_async_engine(test_settings.database_url, echo=False)
@@ -39,3 +53,39 @@ async def test_session(test_settings: Settings) -> AsyncGenerator[AsyncSession, 
         yield session
 
     await engine.dispose()
+
+
+@pytest.fixture()
+def ws_manager() -> StubWsManager:
+    return StubWsManager()
+
+
+@pytest_asyncio.fixture(scope="function")
+async def app(test_session: AsyncSession, test_settings: Settings, ws_manager: StubWsManager):
+    app = create_app()
+
+    async def override_get_session() -> AsyncGenerator[AsyncSession, None]:
+        yield test_session
+
+    app.dependency_overrides[get_db_session] = override_get_session
+    app.dependency_overrides[get_app_settings] = lambda: test_settings
+    app.dependency_overrides[get_ws_manager] = lambda: ws_manager
+    return app
+
+
+@pytest_asyncio.fixture(scope="function")
+async def async_client(app):
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        yield client
+
+
+@asynccontextmanager
+async def _no_lifespan(_: object):
+    yield
+
+
+@pytest.fixture()
+def ws_client(app):
+    app.router.lifespan_context = _no_lifespan
+    return TestClient(app)

@@ -17,7 +17,15 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
-  "include": ["app/**/*"]
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.test.ts",
+    "app/**/*.test.tsx",
+    "app/setupTests.ts",
+    "vite.config.ts"
+  ]
 }
