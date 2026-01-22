@@ -66,7 +66,7 @@ export function Canvas({ projectId }: CanvasProps) {
                       <h3 className="card-title text-sm">{char.name}</h3>
                       {char.image_url ? (
                         <img
-                          src={getStaticUrl(char.image_url)}
+                          src={getStaticUrl(char.image_url) || undefined}
                           alt={char.name}
                           className="w-full h-32 object-contain rounded"
                         />

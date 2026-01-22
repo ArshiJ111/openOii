@@ -1,18 +1,23 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import { fileURLToPath } from "url";
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "./app"),
+      "~": fileURLToPath(new URL("./app", import.meta.url)),
     },
   },
   server: {
     port: 15173,
     strictPort: true,
+  },
+  preview: {
+    port: 15173,
+    strictPort: true,
+    host: true,
   },
   test: {
     globals: true,

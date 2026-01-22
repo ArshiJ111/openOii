@@ -1,4 +1,4 @@
-import { http, HttpResponse, passthrough } from 'msw';
+import { http, passthrough } from 'msw';
 
 export const handlers = [
   // Ignore Google Storage requests

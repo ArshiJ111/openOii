@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useEditorStore } from "~/stores/editorStore";
 import { projectsApi, shotsApi, charactersApi, scenesApi, getStaticUrl } from "~/services/api";
@@ -185,6 +185,32 @@ export function ProjectOverview({ projectId }: ProjectOverviewProps) {
     queryFn: () => projectsApi.get(projectId),
   });
 
+  // 监听角色更新，清除加载状态
+  useEffect(() => {
+    if (regeneratingCharacterId) {
+      const char = characters.find(c => c.id === regeneratingCharacterId);
+      // 如果角色有图片了，说明重生成完成
+      if (char?.image_url) {
+        setRegeneratingCharacterId(null);
+      }
+    }
+  }, [characters, regeneratingCharacterId]);
+
+  // 监听分镜更新，清除加载状态
+  useEffect(() => {
+    if (regeneratingShotId) {
+      const shot = shots.find(s => s.id === regeneratingShotId);
+      // 根据重生成类型检查是否完成
+      if (regeneratingShotType === "image" && shot?.image_url) {
+        setRegeneratingShotId(null);
+        setRegeneratingShotType(null);
+      } else if (regeneratingShotType === "video" && shot?.video_url) {
+        setRegeneratingShotId(null);
+        setRegeneratingShotType(null);
+      }
+    }
+  }, [shots, regeneratingShotId, regeneratingShotType]);
+
   // Mutations
   const updateCharacterMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: Partial<Character> }) =>
@@ -200,7 +226,12 @@ export function ProjectOverview({ projectId }: ProjectOverviewProps) {
     onMutate: (id) => {
       setRegeneratingCharacterId(id);
     },
-    onSettled: () => {
+    onSuccess: () => {
+      // 不立即清除加载状态，等待 WebSocket 事件更新
+      // 加载状态会在角色图片更新后自动清除
+    },
+    onError: () => {
+      // 只在错误时清除加载状态
       setRegeneratingCharacterId(null);
     },
   });
@@ -221,7 +252,12 @@ export function ProjectOverview({ projectId }: ProjectOverviewProps) {
       setRegeneratingShotId(id);
       setRegeneratingShotType(type);
     },
-    onSettled: () => {
+    onSuccess: () => {
+      // 不立即清除加载状态，等待 WebSocket 事件更新
+      // 加载状态会在分镜更新后自动清除
+    },
+    onError: () => {
+      // 只在错误时清除加载状态
       setRegeneratingShotId(null);
       setRegeneratingShotType(null);
     },

@@ -282,9 +282,13 @@ class ImageService:
                                 choices = chunk.get("choices", [])
                                 if choices:
                                     delta = choices[0].get("delta", {})
+                                    # 收集 content 和 reasoning_content
                                     content = delta.get("content", "")
+                                    reasoning_content = delta.get("reasoning_content", "")
                                     if content:
                                         collected_content += content
+                                    if reasoning_content:
+                                        collected_content += reasoning_content
                             except json.JSONDecodeError:
                                 if "error" in data_str:
                                     try:
