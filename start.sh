@@ -54,7 +54,7 @@ start_docker() {
     if docker compose -f docker-compose.dev.yml ps --status running 2>/dev/null | grep -q "postgres\|redis"; then
         echo -e "${GREEN}  基础设施已在运行${NC}"
     else
-        docker compose -f docker-compose.dev.yml up -d
+        docker compose -f docker-compose.dev.yml up -d postgres redis
         echo -e "${YELLOW}  等待服务就绪...${NC}"
         sleep 3
     fi

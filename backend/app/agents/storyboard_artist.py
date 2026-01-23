@@ -32,8 +32,11 @@ class StoryboardArtistAgent(BaseAgent):
         if char_context:
             parts.append(char_context)
 
+        # 强制动漫风格：添加更具体的风格关键词
+        anime_style = "anime, 2D illustration, cel-shading, vibrant colors, Japanese animation style"
+        parts.append(anime_style)
         if style.strip():
-            parts.append(f"Style: {style.strip()}")
+            parts.append(style.strip())
 
         return ", ".join(parts)
 

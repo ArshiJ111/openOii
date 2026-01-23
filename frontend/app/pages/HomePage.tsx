@@ -32,7 +32,7 @@ export function HomePage() {
     createMutation.mutate({
       title: title || "未命名项目",
       story: trimmed,
-      style: "cinematic",
+      style: "anime",
     });
   };
 

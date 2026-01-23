@@ -195,14 +195,17 @@ async def regenerate_shot(
         raise HTTPException(status_code=404, detail="Project not found")
     project_id = project.id
 
+    # 检查是否有针对该分镜的运行中任务（细粒度锁）
     res = await session.execute(
         select(AgentRun)
         .where(AgentRun.project_id == project_id)
         .where(AgentRun.status.in_(["queued", "running"]))
+        .where(AgentRun.resource_type == "shot")
+        .where(AgentRun.resource_id == shot_id)
         .limit(1)
     )
     if res.scalars().first() is not None:
-        raise HTTPException(status_code=409, detail="Another run is already in progress for this project")
+        raise HTTPException(status_code=409, detail="This shot is already being regenerated")
 
     agent_plan: list[Any]
     target_ids = TargetIds(shot_ids=[shot_id])
@@ -249,6 +252,8 @@ async def regenerate_shot(
         current_agent=getattr(agent_plan[0], "name", None) if agent_plan else None,
         progress=0.0,
         error=None,
+        resource_type="shot",  # 设置资源类型
+        resource_id=shot_id,   # 设置资源 ID
     )
     session.add(run)
     await session.commit()

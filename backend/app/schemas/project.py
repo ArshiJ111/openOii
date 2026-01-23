@@ -107,6 +107,8 @@ class AgentRunRead(BaseModel):
     current_agent: str | None
     progress: float
     error: str | None
+    resource_type: str | None  # 资源类型：character|shot|project
+    resource_id: int | None    # 资源 ID
     created_at: datetime
     updated_at: datetime
 

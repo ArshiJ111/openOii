@@ -20,6 +20,9 @@ class AgentRun(SQLModel, table=True):
     route_decision: Optional[str] = Field(default=None, sa_column=Column(Text))
     patch_plan: Optional[str] = Field(default=None, sa_column=Column(Text))
     error: Optional[str] = None
+    # 资源级别锁：用于细粒度并发控制
+    resource_type: Optional[str] = Field(default=None, index=True)  # character|shot|project
+    resource_id: Optional[int] = Field(default=None, index=True)    # 对应资源的 ID
     created_at: datetime = Field(default_factory=utcnow)
     updated_at: datetime = Field(default_factory=utcnow)
 

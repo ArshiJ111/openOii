@@ -38,7 +38,10 @@ async function fetchApi<T>(
 
 // Projects API
 export const projectsApi = {
-  list: () => fetchApi<import("~/types").Project[]>("/api/v1/projects"),
+  list: async () => {
+    const data = await fetchApi<{ items: import("~/types").Project[]; total: number }>("/api/v1/projects");
+    return data.items;
+  },
   
   get: (id: number) => fetchApi<import("~/types").Project>(`/api/v1/projects/${id}`),
   

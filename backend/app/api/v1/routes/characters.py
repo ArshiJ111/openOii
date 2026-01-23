@@ -184,15 +184,18 @@ async def regenerate_character(
         raise HTTPException(status_code=404, detail="Character not found")
     project_id = character.project_id
 
+    # 检查是否有针对该角色的运行中任务（细粒度锁）
     res = await session.execute(
         select(AgentRun)
         .where(AgentRun.project_id == project_id)
         .where(AgentRun.status.in_(["queued", "running"]))
+        .where(AgentRun.resource_type == "character")
+        .where(AgentRun.resource_id == character_id)
         .limit(1)
     )
     if res.scalars().first() is not None:
         raise HTTPException(
-            status_code=409, detail="Another run is already in progress for this project"
+            status_code=409, detail="This character is already being regenerated"
         )
 
     delete_file(character.image_url)
@@ -213,6 +216,8 @@ async def regenerate_character(
         current_agent=getattr(agent_plan[0], "name", None),
         progress=0.0,
         error=None,
+        resource_type="character",  # 设置资源类型
+        resource_id=character_id,   # 设置资源 ID
     )
     session.add(run)
     await session.commit()

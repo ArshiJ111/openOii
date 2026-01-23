@@ -27,7 +27,11 @@ class CharacterArtistAgent(BaseAgent):
         """根据角色描述构建图片生成 prompt"""
         desc = character.description or character.name
         style = style.strip()
-        return f"{desc}, Style: {style}" if style else desc
+        # 强制动漫风格：添加更具体的风格关键词
+        anime_style = "anime, 2D illustration, cel-shading, vibrant colors, Japanese animation style"
+        if style:
+            return f"{desc}, {anime_style}, {style}"
+        return f"{desc}, {anime_style}"
 
     async def run_for_character(self, ctx: AgentContext, character: Character) -> None:
         await self.send_message(
