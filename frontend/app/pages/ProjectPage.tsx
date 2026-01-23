@@ -172,6 +172,8 @@ export function ProjectPage() {
       store.setGenerating(false);
       store.setProgress(0);
       store.setCurrentAgent(null);
+      store.setAwaitingConfirm(false, null, null);
+      store.setCurrentRunId(null);
       store.addMessage({
         agent: "system",
         role: "system",
